@@ -1,0 +1,58 @@
+{% load custom_filters %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Home</title>
+  
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{% static 'customer/css/custom.css' %}">
+  <link rel="stylesheet" href="{% static 'customer/css/base.css' %}">
+  <!-- Custom CSS -->
+ 
+
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <div class="wrapper">
+    <div class="sidebar">
+      <h3 class="text-warning">Banking Website</h3>
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link active text-light" href="{% url 'customer:home' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="{% url 'customer:edit_customer_details' %}">edit_details</a>
+        </li>
+        <li class="nav-item text-light">
+          <a class="nav-link" href="{% url 'customer:transaction' %}">Transaction</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="{% url 'customer:acc' %}">Account Details</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="{% url 'customer:loan' %}">Loan</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="{% url 'customer:delete_account' %}">delete_account</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="{% url 'customer:logout' %}">Logout</a> 
+        </li>
+      </ul>
+    </div>
+
+    <div class="content">
+      {% block body %}<h1>Customer Home</h1>{% endblock %}
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  {% block scriptcontent %}{% endblock %}
+</body>
+</html>

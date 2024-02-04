@@ -1,0 +1,148 @@
+{% extends 'customer/index.html' %}
+{% load custom_filters %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+
+{% block head %}
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(function () {
+        $("#id_date_of_birth").datepicker({
+            dateFormat: "yy-mm-dd",  // Format the date as desired
+            changeYear: true,        // Enable year selection
+            changeMonth: true,       // Enable month selection
+            yearRange: "-100:+0",    // Restrict year selection to the last 100 years
+        });
+    });
+</script>
+
+{% endblock %}
+{% block nav %}
+<li><a href="{% url 'customer:login' %}" class="nav-link scrollto"><i class="bx bx-log-in"></i> <span>login</span></a>
+</li>
+<li><a href="#signup" class="nav-link scrollto"><i class="bx bx-user-plus"></i>
+        <span>signup</span></a></li>
+{% endblock %}
+{% block navlogout%}
+{% endblock %}
+
+{% block body %}
+
+<section id="signup" >
+    <div class="container text-light">
+        <div class="section-title">
+            <h2>Register</h2>
+        </div>
+        <div class="row" data-aos="fade-in">
+            <div class="col-lg-6 d-flex align-items-stretch">             
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" class="img-fluid">              
+            </div>
+            <div class="col-lg-6 mt-5 mt-lg-0  align-items-stretch p-4 border border-2">
+                <form method="post" action="{% url 'customer:signup' %}" >
+                    {% csrf_token %}
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="{{ form.first_name.id_for_label }}" class="col-sm-5 col-form-label ">First Name:</label>
+                                <div class="col-sm-7">
+                                    {{ form.first_name|add_class:'form-control bg-secondary text-light' }}
+                                    {% if form.first_name.errors %}
+                                    <small class="text-dark">{{ form.first_name.errors|join:", " }}</small>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="{{ form.last_name.id_for_label }}" class="col-sm-5 col-form-label">Last Name:</label>
+                                <div class="col-sm-7">
+                                    {{ form.last_name|add_class:'form-control bg-secondary text-light' }}
+                                    {% if form.last_name.errors %}
+                                    <small class="text-dark">{{ form.last_name.errors|join:", " }}</small>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <label for="{{ form.username.id_for_label }}" class="col-md-4  col-form-label">Username:</label>
+                        <div class="col-md-8 ">
+                            {{ form.username|add_class:'form-control bg-secondary text-light' }}
+                            {% if form.username.errors %}
+                            <small class="text-dark">{{ form.username.errors|join:", " }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <label for="{{ form.password1.id_for_label }}" class="col-sm-4 col-form-label">Password:</label>
+                        <div class="col-sm-8">
+                            {{ form.password1|add_class:'form-control bg-secondary text-light' }}
+                            {% if form.password1.errors %}
+                            <small class="text-dark">{{ form.password1.errors|join:", " }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <label for="{{ form.password2.id_for_label }}" class="col-sm-4 col-form-label">Confirm Password:</label>
+                        <div class="col-sm-8">
+                            {{ form.password2|add_class:'form-control bg-secondary text-light' }}
+                            {% if form.password2.errors %}
+                            <small class="text-dark">{{ form.password2.errors|join:", " }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <label for="{{ form.email.id_for_label }}" class="col-sm-4 col-form-label">Email:</label>
+                        <div class="col-sm-8">
+                            {{ form.email|add_class:'form-control bg-secondary text-light' }}
+                            {% if form.email.errors %}
+                            <small class="text-dark">{{ form.email.errors|join:", " }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <label for="{{ form.contact_number.id_for_label }}" class="col-sm-4 col-form-label">Contact Number:</label>
+                        <div class="col-sm-8">
+                            {{ form.contact_number|add_class:'form-control bg-secondary text-light' }}
+                            {% if form.contact_number.errors %}
+                            <small class="text-dark">{{ form.contact_number.errors|join:", " }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <label for="{{ form.address.id_for_label }}" class="col-sm-4 col-form-label">Address:</label>
+                        <div class="col-sm-8">
+                            {{ form.address|add_class:'form-control bg-secondary text-light text-light' }}
+                            {% if form.address.errors %}
+                            <small class="text-dark">{{ form.address.errors|join:", " }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <label for="{{ form.date_of_birth.id_for_label }}" class="col-sm-4 col-form-label">Date of Birth:</label>
+                        <div class="col-sm-8">
+                            {{ form.date_of_birth|add_class:'form-control bg-secondary text-light' }}
+                            {% if form.date_of_birth.errors %}
+                            <small class="text-danger">{{ form.date_of_birth.errors|join:", " }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div ><button class="btn btn-primary w-100" type="submit">Register</button></div>                    
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+{% endblock %}

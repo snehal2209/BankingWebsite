@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Home</title>
+  
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  
+  <!-- Custom CSS -->
+  <style>
+    /* Add your custom styles here */
+    body, html {
+      height: 100%;
+    }
+
+    .wrapper {
+      display: flex;
+      height: 100%;
+    }
+
+    .sidebar {
+      width: 200px;
+      background-color: #333333;
+      color: #ffffff;
+    }
+
+    .content {
+      flex-grow: 1;
+      padding: 20px;
+      background-color: #999999;
+      color: #ffffff;
+    }
+  </style>
+
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <div class="wrapper">
+    <div class="sidebar">
+      <h4 class="text-warning">Banking Website</h4>
+      
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link active text-light" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="{% url 'admins:account_details' %}">Accounts</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="{% url 'admins:transaction_details' %}">Transactions</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="{% url 'admins:customer_details' %}">Customers</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="#">Settings</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="content">
+      {% block body %}<h1>Admin Home</h1>{% endblock %}
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

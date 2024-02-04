@@ -1,0 +1,98 @@
+{% extends 'customer/index.html' %}
+{% load custom_filters %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+
+{% block head %}
+<style>
+    .divider:after,
+    .divider:before {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: #eee;
+    }
+</style>
+
+{% endblock %}
+
+
+
+{% block nav %}
+<li><a href="#Login" class="nav-link scrollto"><i class="bx bx-log-in"></i> <span>login</span></a>
+</li>
+<li><a href="{% url 'customer:signup' %}" class="nav-link scrollto"><i class="bx bx-user-plus"></i>
+        <span>signup</span></a></li>
+{% endblock %}
+{% block navlogout%}
+{% endblock %}
+
+
+
+{% block body %}
+
+{% if success_message %}
+<p>{{ success_message }}</p>
+{% endif %}
+{% if error_message %}
+<p>{{ error_message }}</p>
+{% endif %}
+
+
+
+<section id="Login">
+    <div class="container text-light">
+        <div class="section-title">
+            <h2>Login</h2>
+        </div>
+        {%if messages%}
+        {%for message in messages%}
+        
+        <div {%if message.tags%} class="alert alert-{{message.tags}} {%endif%} alert-dismissible fade show" role="alert">
+           {{message}}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          <script type="text/javascript">
+            alert("{{message}}");
+          </script>
+        </div>
+          <p  class="alert alert- mb-5" ></p>
+          
+        {%endfor%}
+      {%endif%}
+        <div class="row">
+
+            <div class="col-lg-5 d-flex align-items-stretch">
+                <div class="info">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" class="img-fluid">
+                </div>
+            </div>
+
+            <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+                <div class="divider d-flex align-items-center my-4">
+                </div>
+                <form method="post" action="{% url 'customer:login' %}" >
+                    {% csrf_token %}
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="username">USERNAME</label>
+                        <input type="text" id="username" name="username" required class="form-control form-control-lg" />
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="password">PASSWORD</label>
+                        <input type="password" id="password" name="password" required class="form-control form-control-lg mb-7" />
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg w-100 btn-block">Login</button>
+                    <div class="divider d-flex align-items-center my-4"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+{% endblock %}

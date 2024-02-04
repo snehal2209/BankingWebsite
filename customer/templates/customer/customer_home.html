@@ -1,0 +1,56 @@
+{% extends 'customer/index.html' %}
+
+{% block bodyblock %}
+{% if success_message %}
+        <p>{{ success_message }}</p>
+{% endif %}
+{% if messages %}
+{% for message in messages %}
+
+<div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+  <strong>{{message.tags}}!</strong> {{message}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  <script type="text/javascript">
+    alert("{{message}}");
+  </script>
+</div>
+  {% comment %} <p {%if message.tags%} class="alert alert- mb-5"{%endif%} ></p> {% endcomment %}
+  
+{% endfor %}
+{% endif %}
+<img src="{{customer.pic.url}}" height="300">
+<h2>Welcome, {{ customer.username }}</h2>
+<p>Phone Number: {{ customer.contact_number }}</p>
+<p>Email: {{ customer.email }}</p>
+<p>Address: {{ customer.address }}</p>
+<h1>Customer Details</h1>
+<table class="table">
+    <thead>
+      <tr>
+        <th>Customer ID</th>
+        <th>Username</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Contact Number</th>
+        <th>Address</th>
+        <th>Date of Birth</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>{{ customer.customer_id }}</td>
+          <td>{{ customer.username }}</td>
+          <td>{{ customer.first_name }}</td>
+          <td>{{ customer.last_name }}</td>
+          <td>{{ customer.email }}</td>
+          <td>{{ customer.contact_number }}</td>
+          <td>{{ customer.address }}</td>
+          <td>{{ customer.date_of_birth }}</td>
+        </tr>
+      
+    </tbody>
+  </table>
+{% endblock %}
+

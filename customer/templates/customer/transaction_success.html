@@ -1,0 +1,12 @@
+{% extends 'customer/customer_base.html' %}
+{% load custom_filters %}
+{% block body %}
+
+<h1>Transaction Successful</h1>
+<p>Transaction ID: {{ transaction.transaction_id }}</p>
+<p>Account ID: {{ transaction.account_id }}</p>
+<p>Amount: {{ transaction.amount }}</p>
+<p>Description: {{ transaction.description }}</p>
+<p>Transaction Date: {{ transaction.transaction_date }}</p>
+
+{% endblock %}

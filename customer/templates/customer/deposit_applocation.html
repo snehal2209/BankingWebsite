@@ -1,0 +1,139 @@
+{% extends 'customer/index.html' %}
+{% load custom_filters %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block bodyblock %}
+<main id="main">
+    <section id="skills" class="skills bg-secondary text-light">
+        <div class="container">
+          <div class="section-title">
+            <h2>Fixed Deposit</h2>
+            <p>Grow your savings with our attractive fixed deposit plans, offering competitive interest rates and guaranteed returns.
+                Rest assured that your money is in safe hands as we provide you with a secure and reliable fixed deposit investment opportunity.</p>
+          </div>
+          <button type="button" class="btn btn-primary mb-5" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            DEPOSIT MONEY
+          </button>
+          {% if done %}<hr>
+                <p class="bg-warning">{{ done }}</p><hr>
+            {% endif %}
+          {% if error_message %}<hr>
+          <p class="bg-warning">{{ error_message }}</p><hr>
+          {% endif %}
+  
+            
+            <div class="card">
+                <div class="card-body text-light bg-secondary">
+                  <h5 class="card-title">Deposit History</h5>
+    
+                  <!-- Table with hoverable rows -->
+                  <table class="table table-hover table-secondary">
+                    <thead>
+                      <tr class="table-primary">
+                        <th scope="col">#</th>
+                        <th scope="col">amount</th>
+                        <th scope="col">interest_rate</th>
+                        <th scope="col">deposit_term</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">maturity_date</th>
+                        <th scope="col">status</th>
+                        <th scope="col">Profit</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                     {% for deposit in deposits %}
+                      <tr class="{% if deposit.status == 'req_stop' %}table-warning{% elif deposit.status == 'matured' %}table-success{% elif deposit.status == 'active' %}table-primary{% elif deposit.status == 'closed' %}table-secondary{% endif %}">
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ deposit.deposit_amount }}</td>
+                        <td>{{ deposit.interest_rate }}</td>
+                        <td>{{ deposit.deposit_term }}</td>
+                        <td>{{ deposit.start_date }}</td>
+                        <td>{{ deposit.maturity_date }}</td>
+                        <td>{{ deposit.status }}</td>
+                        <td>{{ deposit.interest_earned }}</td>
+                        <td><!-- Button trigger modal -->
+                            {% if deposit.status == 'active' or deposit.status == 'matured' %}<button type="button" class="btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{ deposit.deposit_id }}">
+                                    STOP
+                                </button>{% endif %}
+                           
+                        </td>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal{{ deposit.deposit_id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content text-light bg-secondary">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Stop Request</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="POST" action="{% url 'customer:update_deposit_status' %}">
+                                            {% csrf_token %}
+                                            <div class="form-group">
+                                                <div class="mb-3 row ">
+                                                    <div class="col-sm-5">
+                                                        <label>Deposit ID</label>
+                                                    </div>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" class="form-control" id="floatingAmount" placeholder="Amount" name="deposit_id" value="{{ deposit.deposit_id }}" readonly><br>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">CONFIRM</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      </tr>
+                     {% endfor %}
+                    </tbody>
+                  </table>
+                  <!-- End Table with hoverable rows -->
+                </div>
+              </div>
+          </div>
+          <!-- Button trigger modal -->
+    </section>
+</main>
+      
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content text-light bg-secondary">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Deposit Money</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'customer:deposit' %}">
+                    {% csrf_token %}
+                    {% for fm in form %}
+                        <div class="form-group">
+                            {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors|striptags}}</small><br>
+                        </div>
+                    {% endfor %}
+                    {% if errors %}
+                        <ul class="errors">
+                        {% for field, error_list in errors.items %}
+                            {% for error in error_list %}
+                                <li>{{ field }}: {{ error.message }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                        </ul>
+                    {% endif %}<hr>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>  
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

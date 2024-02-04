@@ -1,0 +1,114 @@
+{% extends 'customer/index.html' %}
+{% load custom_filters %}
+{% block bodyblock %}
+<main id="main">
+    <section id="skills" class="skills bg-secondary text-light">
+        <div class="container">
+            <div class="section-title">
+            <h2>Transaction Details</h2>
+            </div>
+            {% if error_message %}
+                <div  class="alert alert-warning  alert-dismissible fade show" role="alert">
+                    {{ error_message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+            {% if transaction %}<hr>
+            <p class="bg-warning">{{ transaction.transaction_id }}</p><hr>
+            {% endif %}
+            <button type="button" class="btn btn-primary mb-5" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                TRANSFER MONEY
+            </button>
+            <div class="card">
+                <div class="card-body text-light bg-secondary">
+                  <h5 class="card-title">Transaction Details</h5>
+                  <table class="table datatable datatable-table table-hover table-secondary">
+                    <thead>
+                      <tr class="table-primary">
+                        <th data-sortable="true" style="width: 5.635062611806798%;"><a href="#"
+                            class="datatable-sorter">#</a></th>
+                        <th data-sortable="true"><a href="#" class="datatable-sorter">Name</a></th>
+                        <th data-sortable="true"><a href="#" class="datatable-sorter">FROM</a></th>
+                        <th data-sortable="true"><a href="#" class="datatable-sorter">TYPE</a></th>
+                        <th data-sortable="true"><a href="#" class="datatable-sorter">TO</a></th>
+                        <th data-sortable="true"><a href="#" class="datatable-sorter">Date</a></th>
+                        <th data-sortable="true"><a href="#" class="datatable-sorter">AMOUNT</a></th>
+                        <th data-sortable="true"><a href="#" class="datatable-sorter">DESCRIPTION</a></th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      {% for transaction in transactions %}
+                      <tr data-index="{{ transaction.transaction_id }}">
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ transaction.account_number.customer_id.first_name }}
+                          {{transaction.account_number.customer_id.last_name }}</td>
+                        <td>{{ transaction.account_number.account_number }}</td>
+                        <td>{{ transaction.transaction_type }}</td>
+                        <td>{{ transaction.account_to }}</td>
+                        <td>{{ transaction.transaction_date }}</td>
+                        <td>{{ transaction.amount }}</td>
+                        <td>{{ transaction.description }}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+            
+
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content text-light bg-secondary">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Transfer Money</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                
+                <form method="post" >
+                    {% csrf_token %}
+                    {% for fm in form %}
+                        <div class="form-group">
+                            <div class="mb-3 row ">
+                                <div class="col-sm-5">
+                                    {{fm.label_tag}}
+                                </div>
+                                <div class="col-sm-7">
+                                    {{fm}} <small class="text-danger">{{fm.errors|striptags}}</small><br>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    {% endfor %}
+                    {% if errors %}
+                        <ul class="errors">
+                        {% for field, error_list in errors.items %}
+                            {% for error in error_list %}
+                                <li>{{ field }}: {{ error.message }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                        </ul>
+                    {% endif %}<hr>
+                    <button type="button" class="btn btn-info" data-bs-dismiss="modal">Close</button>
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>  
+                </form>
+                
+            </div>
+        
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,535 @@
+{% extends 'admins/index.html' %}
+
+{% load static %}
+{% block database %}
+
+
+<!-- ======= database Section ======= -->
+<section id="portfolio">
+    <div class="container" data-aos="fade-up">
+
+      <div class="section-title">
+        <h2>DATABASE</h2>
+      </div>
+
+
+
+
+
+      <div class="card">
+        <div class="card-body">
+          {% if error_message %}<hr>
+            <p class="bg-warning">{{ error_message }}</p><hr>
+            {% endif %}
+
+
+          <!-- account Tabs Justified -->
+          <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+            <li class="nav-item flex-fill" role="presentation">
+              <button class="nav-link w-100" id="home-tab" data-bs-toggle="tab"
+                data-bs-target="#bordered-justified-home" type="button" role="tab" aria-controls="home"
+                aria-selected="false" tabindex="-1">Account Details</button>
+            </li>
+            <li class="nav-item flex-fill" role="presentation">
+              <button class="nav-link w-100 active" id="profile-tab" data-bs-toggle="tab"
+                data-bs-target="#bordered-justified-profile" type="button" role="tab" aria-controls="profile"
+                aria-selected="true">Customer Details</button>
+            </li>
+            <li class="nav-item flex-fill" role="presentation">
+              <button class="nav-link w-100" id="transaction-tab" data-bs-toggle="tab"
+                data-bs-target="#bordered-justified-contact" type="button" role="tab" aria-controls="contact"
+                aria-selected="false" tabindex="-1">Transaction Details</button>
+            </li>
+            <li class="nav-item flex-fill" role="presentation">
+              <button class="nav-link w-100" id="loan-tab" data-bs-toggle="tab"
+                data-bs-target="#bordered-justified-loan" type="button" role="tab" aria-controls="loan"
+                aria-selected="false" tabindex="-1">loan Details</button>
+            </li>
+            <li class="nav-item flex-fill" role="presentation">
+                <button class="nav-link w-100" id="fd-tab" data-bs-toggle="tab"
+                  data-bs-target="#bordered-justified-fd" type="button" role="tab" aria-controls="loan"
+                  aria-selected="false" tabindex="-1">fd Details</button>
+              </li>
+          </ul>
+          <div class="tab-content pt-2" id="borderedTabJustifiedContent">
+            <div class="tab-pane fade" id="bordered-justified-home" role="tabpanel" aria-labelledby="home-tab">
+              <div class="datatable-top">
+                <div class="datatable-dropdown">
+                  <label>
+                    <select class="datatable-selector">
+                      <option value="5">5</option>
+                      <option value="10" selected="">10</option>
+                      <option value="15">15</option>
+                      <option value="20">20</option>
+                      <option value="25">25</option>
+                    </select> entries per page
+                  </label>
+                </div>
+                <div class="datatable-search">
+                  <input class="datatable-input" placeholder="Search..." type="search" title="Search within table">
+                </div>
+              </div>
+              <div class="datatable-container">
+
+                <table class="table datatable datatable-table">
+                  <thead>
+                    <tr>
+                      <th data-sortable="true" style="width: 5%;"><a href="#" class="datatable-sorter">#</a></th>
+                      <th data-sortable="true"><a href="#" class="datatable-sorter">USERNAME</a></th>
+                      <th data-sortable="true"><a href="#" class="datatable-sorter">ACCOUNT NUMBER</a></th>
+                      <th data-sortable="true"><a href="#" class="datatable-sorter">BALANCE</a></th>
+                      <th data-sortable="true"><a href="#" class="datatable-sorter">STATUS</a></th>
+
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for account in account %}
+                    <tr data-index="{{ account.account_id }}">
+                      <td>{{ account.account_id }}</td>
+                      <td>{{ account.customer_id.first_name }} {{ account.customer_id.last_name }}</td>
+                      <td>{{ account.account_number }}</td>
+                      <td>{{ account.balance }}</td>
+                      <td>{{ account.status }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <div class="datatable-bottom">
+                <div class="datatable-info">Showing 1 to 5 of 5 entries</div>
+                <nav class="datatable-pagination">
+                  <ul class="datatable-pagination-list"></ul>
+                </nav>
+              </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+            <!-- customer -->
+            <div class="tab-pane fade active show" id="bordered-justified-profile" role="tabpanel"
+              aria-labelledby="profile-tab">
+              <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+                <div class="datatable-top">
+                  <div class="datatable-dropdown">
+                    <label>
+                      <select class="datatable-selector">
+                        <option value="5">5</option>
+                        <option value="10" selected="">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="25">25</option>
+                      </select> entries per page
+                    </label>
+                  </div>
+                  <div class="datatable-search">
+                    <input class="datatable-input" placeholder="Search..." type="search" title="Search within table">
+                  </div>
+                </div>
+                <div class="datatable-container">
+
+                  <table class="table datatable datatable-table">
+                    <thead>
+                      <tr>
+                        <th data-sortable="true" style="width: 5%;"><a href="#" class="datatable-sorter">#</a></th>
+                        <th data-sortable="true"><a href="#" class="datatable-sorter">USERNAME</a></th>
+                        <th data-sortable="true"><a href="#" class="datatable-sorter">FIRST NAME</a></th>
+                        <th data-sortable="true"><a href="#" class="datatable-sorter">LAST NAME</a></th>
+                        <th data-sortable="true"><a href="#" class="datatable-sorter">EMAIL</a></th>
+                        <th data-sortable="true"><a href="#" class="datatable-sorter">CONTACT</a></th>
+                        <th data-sortable="true"><a href="#" class="datatable-sorter">ADDRESS</a></th>
+                        <th data-sortable="true"><a href="#" class="datatable-sorter">DATE of BIRTH</a></th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      {% for customer in customer %}
+                      <tr data-index="{{ customer.customer_id }}">
+                        <td>{{ customer.customer_id }}</td>
+                        <td>{{ customer.username }}</td>
+                        <td>{{ customer.first_name }}</td>
+                        <td>{{ customer.last_name }}</td>
+                        <td>{{ customer.email }}</td>
+                        <td>{{ customer.contact_number }}</td>
+                        <td>{{ customer.address }}</td>
+                        <td>{{ customer.date_of_birth }}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                <div class="datatable-bottom">
+                  <div class="datatable-info">Showing 1 to 5 of 5 entries</div>
+                  <nav class="datatable-pagination">
+                    <ul class="datatable-pagination-list"></ul>
+                  </nav>
+                </div>
+              </div>
+              <!-- End Table with stripped rows -->
+            </div>
+
+
+
+
+
+
+
+
+            <!-- transaction -->
+            <div class="tab-pane fade" id="bordered-justified-contact" role="tabpanel"
+              aria-labelledby="transaction-tab">
+              <section class="section">
+                <div class="row">
+                  <div class="col-lg-12">
+
+                    <div class="card">
+                      <div class="card-body">
+                        <!-- Table with stripped rows -->
+                        <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+                          <div class="datatable-top">
+                            <div class="datatable-dropdown">
+                              <label>
+                                <select class="datatable-selector">
+                                  <option value="5">5</option>
+                                  <option value="10" selected="">10</option>
+                                  <option value="15">15</option>
+                                  <option value="20">20</option>
+                                  <option value="25">25</option>
+                                </select> entries per page
+                              </label>
+                            </div>
+                            <div class="datatable-search">
+                              <input class="datatable-input" placeholder="Search..." type="search"
+                                title="Search within table">
+                            </div>
+                          </div>
+                          <div class="datatable-container">
+                            <table class="table datatable datatable-table">
+                              <thead>
+                                <tr>
+                                  <th data-sortable="true" style="width: 5.635062611806798%;"><a href="#"
+                                      class="datatable-sorter">#</a></th>
+                                  <th data-sortable="true"><a href="#" class="datatable-sorter">Name</a></th>
+                                  <th data-sortable="true"><a href="#" class="datatable-sorter">FROM</a></th>
+                                  <th data-sortable="true"><a href="#" class="datatable-sorter">TYPE</a></th>
+                                  <th data-sortable="true"><a href="#" class="datatable-sorter">TO</a></th>
+                                  <th data-sortable="true"><a href="#" class="datatable-sorter">Date</a></th>
+                                  <th data-sortable="true"><a href="#" class="datatable-sorter">AMOUNT</a></th>
+                                  <th data-sortable="true"><a href="#" class="datatable-sorter">balance</a></th>
+
+                                </tr>
+                              </thead>
+                              <tbody>
+
+                                {% for transaction in status %}
+                                <tr data-index="{{ transaction.transaction_id }}">
+                                  <td>{{ transaction.transaction_id }}</td>
+                                  <td>{{ transaction.account_number.customer_id.first_name }}
+                                    {{transaction.account_number.customer_id.last_name }}</td>
+                                  <td>{{ transaction.account_number.account_number }}</td>
+                                  <td>{{ transaction.transaction_type }}</td>
+                                  <td>{{ transaction.account_to }}</td>
+                                  <td>{{ transaction.transaction_date }}</td>
+                                  <td>{{ transaction.amount }}</td>
+                                  <td>{{ transaction.account_number.balance }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </div>
+                          <div class="datatable-bottom">
+                            <div class="datatable-info">Showing 1 to 5 of 5 entries</div>
+                            <nav class="datatable-pagination">
+                              <ul class="datatable-pagination-list"></ul>
+                            </nav>
+                          </div>
+                        </div>
+                        <!-- End Table with stripped rows -->
+
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </section>
+              hii
+            </div>
+
+
+
+
+
+            <!-- Loan -->
+            <div class="tab-pane fade" id="bordered-justified-loan" role="tabpanel"
+              aria-labelledby="loan-tab">
+              <section class="section">
+                <div class="row">
+                  <div class="col-lg-12">
+                    
+                        <!-- Table with stripped rows -->
+                        <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+                          <div class="datatable-top">
+                            <div class="datatable-dropdown">
+                              <label>
+                                <select class="datatable-selector">
+                                  <option value="5">5</option>
+                                  <option value="10" selected="">10</option>
+                                  <option value="15">15</option>
+                                  <option value="20">20</option>
+                                  <option value="25">25</option>
+                                </select> entries per page
+                              </label>
+                            </div>
+                            <div class="datatable-search">
+                              <input class="datatable-input" placeholder="Search..." type="search"
+                                title="Search within table">
+                            </div>
+                          </div>
+                          <div class="datatable-container">
+                            <table class="table datatable datatable-table">
+                              <thead>
+                                <tr>
+                                  <th data-sortable="true" style="width: 5.635062611806798%;"><a href="#"
+                                      class="datatable-sorter">#</a></th>
+                                  <th data-sortable="true"><a href="#" class="datatable-sorter">Name</a></th>
+                                  <th data-sortable="true"><a href="#" class="datatable-sorter">AMOUNT</a></th>
+                                  <th data-sortable="true"><a href="#" class="datatable-sorter">INTEREST</a></th>
+                                  <th data-sortable="true"><a href="#" class="datatable-sorter">DURATION</a></th>
+                                  <th data-sortable="true"><a href="#" class="datatable-sorter">DATE</a></th>
+                                  <th data-sortable="true"><a href="#" class="datatable-sorter">START_DATE</a></th>
+                                  <th data-sortable="true"><a href="#" class="datatable-sorter">END_DATE</a></th>
+                                  <th data-sortable="true"><a href="#" class="datatable-sorter">MONTHLY_PAYMENT</a></th>
+                                  <th data-sortable="true"><a href="#" class="datatable-sorter">STATUS</a></th>
+                                  <th data-sortable="true"><a href="#" class="datatable-sorter">ACTION</a></th>
+
+                                </tr>
+                              </thead>
+                              <tbody>
+
+                                {% for loan in loan %}
+                                <tr data-index="{{ loan.loan_id }}">
+                                  <td>{{ loan.loan_id }}</td>
+                                  <td>{{ loan.customer_id.first_name }}
+                                    {{loan.customer_id.last_name }}</td>
+                                  <td>{{ loan.loan_amount }}</td>
+                                  <td>{{ loan.interest_rate }}</td>
+                                  <td>{{ loan.loan_term }}</td>
+                                  <td>{{ loan.application_date }}</td>
+                                  <td>{{ loan.start_date }}</td>
+                                  <td>{{ loan.end_date }}</td>
+                                  <td>{{ loan.monthly_payment }}</td>
+                                  <td>
+                                    <button class="btn {% if loan.status == 'pending' %}bg-warning{% elif loan.status == 'approved' %}bg-success{% elif loan.status == 'rejected' %}bg-danger{% elif loan.status == 'closed' %}bg-secondary{% endif %}" {% if loan.status != 'pending' %}disabled{% endif %} data-bs-toggle="modal" data-bs-target="#{{ loan.loan_id }}">
+                                      {{ loan.status }}
+                                  </button>
+                                  <div class="modal fade" id="{{ loan.loan_id }}" tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title">Vertically Centered</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <form class="row g-3" action="{% url 'admins:update-loan' %}" method="post">
+                                            {% csrf_token %}
+                                            <div class="col-md-12">
+                                              <div class="form-floating">
+                                                <input type="text" class="form-control" id="floatingName" placeholder="Your Name" value="{{ loan.customer_id.first_name }}">
+                                                <label for="floatingName">Your Name</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                              <div class="form-floating">
+                                                <input type="text" class="form-control" id="loan_id" placeholder="loan_id" value="{{ loan.loan_id }}" name="loan_id"> 
+                                                <label for="loan_id">Loan Id</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                              <div class="form-floating">
+                                                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                                                <label for="floatingPassword">Password</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-12">
+                                              <div class="form-floating">
+                                                <textarea class="form-control" placeholder="Address" id="floatingTextarea" style="height: 100px;" value="{{ loan.loan_id }}"></textarea>
+                                                <label for="floatingTextarea" >{{ loan.status }}</label>
+                                              </div>
+                                            </div>
+                                            
+                                            <div class="col-md-6">
+                                              <div class="col-md-12">
+                                                <div class="form-floating">
+                                                  <input type="text" class="form-control" id="floatingAmount" placeholder="Amount" name="loan_amount" value="{{ loan.loan_amount }}">
+                                                  <label for="floatingAmount">Amount</label>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                              <div class="form-floating mb-3">
+                                                <select class="form-select" id="status" aria-label="State" name="status">
+                                                  <option selected value="pending">pending</option>
+                                                  <option value="approved">approved</option>
+                                                  <option value="rejected">rejected</option>
+                                                  
+                                                </select>
+                                                <label for="status">State</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                              <div class="form-floating">
+                                                <input type="text" class="form-control" id="floatingZip" placeholder="Zip">
+                                                <label for="floatingZip">Zip</label>
+                                              </div>
+                                            </div>
+                                            <div class="text-center">
+                                              <button type="" class="btn btn-primary">Submit</button>
+                                              <button type="reset" class="btn btn-secondary">Reset</button>
+                                              <button type="button" class="btn btn-info" data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                          </form>
+                                        </div>
+                                        
+                                      </div>
+                                    </div>
+                                  </div>
+                                </td>
+                                
+                                <td></td>
+                                
+                                
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </div>
+                          
+                        
+                      
+                          <div class="datatable-bottom">
+                            <div class="datatable-info">Showing 1 to 5 of 5 entries</div>
+                            <nav class="datatable-pagination">
+                              <ul class="datatable-pagination-list"></ul>
+                            </nav>
+                          </div>
+                        </div>
+                        <!-- End Table with stripped rows -->
+
+                      </div>
+                    
+                </div>
+              </section>
+            </div>
+
+
+     
+
+
+
+            <!-- fd -->
+            <div class="tab-pane fade" id="bordered-justified-fd" role="tabpanel"
+              aria-labelledby="transaction-tab">
+              <section class="section">
+                <div class="row">
+                  <div class="col-lg-12">
+
+                    <div class="card">
+                      <div class="card-body">
+                        <!-- Table with stripped rows -->
+                        <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+                          <div class="datatable-top">
+                            <div class="datatable-dropdown">
+                              <label>
+                                <select class="datatable-selector">
+                                  <option value="5">5</option>
+                                  <option value="10" selected="">10</option>
+                                  <option value="15">15</option>
+                                  <option value="20">20</option>
+                                  <option value="25">25</option>
+                                </select> entries per page
+                              </label>
+                            </div>
+                            <div class="datatable-search">
+                              <input class="datatable-input" placeholder="Search..." type="search"
+                                title="Search within table">
+                            </div>
+                          </div>
+                          <div class="datatable-container">
+                            <table class="table datatable datatable-table table-hover">
+                                
+                                    <thead>
+                                      <tr class="table-primary">
+                                        <th scope="col">#</th>
+                                        <th scope="col">amount</th>
+                                        <th scope="col">interest_rate</th>
+                                        <th scope="col">deposit_term</th>
+                                        <th scope="col">Start Date</th>
+                                        <th scope="col">maturity_date</th>
+                                        <th scope="col">status</th>
+                                        <th scope="col">Profit</th>
+                                        <th scope="col">Action</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                     {% for deposit in deposits %}
+                                      <tr>
+                                        <th scope="row">{{ deposit.deposit_id }}</th>
+                                        <td>{{ deposit.deposit_amount }}</td>
+                                        <td>{{ deposit.interest_rate }}</td>
+                                        <td>{{ deposit.deposit_term }}</td>
+                                        <td>{{ deposit.start_date }}</td>
+                                        <td>{{ deposit.maturity_date }}</td>
+                                        <td>{{ deposit.status }}</td>
+                                        <td>{{ deposit.interest_earned }}</td>
+                                        <td><!-- Button trigger modal -->
+                                          {% if deposit.status == 'req_stop' %}
+                                          <a href="{% url 'admins:fd_details' pk=deposit.deposit_id %}" class="btn btn-primary">View Details</a>
+                                          {% endif %}
+                                      </tr>
+                                     {% endfor %}
+                                    </tbody>
+                                  </table>
+                          </div>
+                          <div class="datatable-bottom">
+                            <div class="datatable-info">Showing 1 to 5 of 5 entries</div>
+                            <nav class="datatable-pagination">
+                              <ul class="datatable-pagination-list"></ul>
+                            </nav>
+                          </div>
+                        </div>
+                        <!-- End Table with stripped rows -->
+
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </section>
+              FD
+            </div><!-- End fd -->
+
+
+
+
+
+
+
+
+
+
+          </div><!-- End Bordered Tabs Justified -->
+
+        </div>
+      </div>
+    </div>
+  </section><!-- End Portfolio Section -->
+
+{% endblock %}

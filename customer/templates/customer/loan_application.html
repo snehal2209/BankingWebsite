@@ -1,0 +1,158 @@
+{% extends 'customer/index.html' %}
+{% load custom_filters %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block head %}
+<title>Loan Application</title>
+
+{% endblock %}
+{% block bodyblock %}
+<main id="main">
+    <section id="skills" class="skills bg-secondary text-light">
+        <div class="container">
+
+            <div class="section-title">
+                <h2>Loan</h2>
+            </div>
+            {% if error_message %}<hr>
+            <p class="bg-warning">{{ error_message }}</p><hr>
+            {% endif %}
+            <div class="card mb-5">
+                <div class="card-body text-light bg-secondary">
+                    <h1 class="card-title text-center">Loan Details</h1>
+                    <table class="table table-hover table-secondary">
+                        <thead>
+                            <tr class="table-primary">
+                                <th scope="col">#</th>
+                                <th scope="col">amount</th>
+                                <th scope="col">interest_rate</th>
+                                <th scope="col">loan_term</th>
+                                <th scope="col">Start Date</th>
+                                <th scope="col">status</th>
+                                <th scope="col">End Date</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for loan in loans %}
+                            <tr class="{% if loan.status == 'pending' %}table-warning{% elif loan.status == 'approved' %}table-success{% elif loan.status == 'rejected' %}table-danger{% elif loan.status == 'closed' %}table-secondary{% endif %}">
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td>{{ loan.loan_amount }}</td>
+                                <td>{{ loan.interest_rate }}</td>
+                                <td>{{ loan.loan_term }}</td>
+                                <td>{{ loan.start_date }}</td>
+                                <td>{{ loan.status }}</td>
+                                <td>{{ loan.end_date }}</td>
+                                <td><!-- Button trigger modal -->
+                                    <button type="button" {% if loan.status != 'approved' %}disabled{% endif %} data-bs-toggle="modal" data-bs-target="#exampleModal{{ loan.loan_id }}">
+                                        PAY
+                                    </button>
+                                </td>
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal{{ loan.loan_id }}" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content text-light bg-secondary">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Loan Payment</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form method="POST" action="{% url 'customer:pay_loan' %}">
+                                                    {% csrf_token %}
+                                                    <div class="mb-1 row ">
+                                                        <div class="col-sm-5">
+                                                            <label for="loanamount">AMOUNT</label>
+                                                        </div>
+                                                        <div class="col-sm-7">
+                                                            <input class="form-control" id="loanamount"  name="loan_amount" value="{{ loan.total_amount }}" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-1 row ">
+                                                        <div class="col-sm-5">
+                                                            <label for="customerid">CUSTOMER ID</label>
+                                                        </div>
+                                                        <div class="col-sm-7">
+                                                            <input type="text" class="form-control" id="customerid" name="customer_id" value="{{ loan.customer_id.first_name }}" readonly>
+                                                        </div>
+                                                        {% if loan.total_amount >= account.balance %}<small class="text-warning">low balance</small><br>{% endif %}
+                                                    </div>
+                                                    <div class="mb1 row ">
+                                                        <div class="col-sm-5">
+                                                            <label for="floatingId">LOAN ID</label>
+                                                        </div>
+                                                        <div class="col-sm-7">
+                                                            <input type="text" class="form-control" id="floatingId" placeholder="Amount" name="loan_id" value="{{ loan.loan_id }}" readonly><br>
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary" {% if loan.total_amount >= account.balance %}disabled{% endif %}>Save changes</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Apply for Loan
+            </button>
+
+        </div>
+    </section>
+</main>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content text-light bg-secondary">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form method="post">
+                    {% csrf_token %}
+                    {% for fm in form %}
+                    {% comment %} <div class="form-group">
+                        {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors|striptags}}</small><br>
+                    </div> {% endcomment %}
+                    <div class="mb-3 row ">
+                        <div class="col-sm-5">
+                            {{fm.label_tag}}
+                        </div>
+                        <div class="col-sm-7">
+                            {{fm}} <small class="text-danger">{{fm.errors|striptags}}</small><br>
+                        </div>
+
+                    </div>
+                    {% endfor %}
+                    {% if errors %}
+                    <ul class="errors">
+                        {% for field, error_list in errors.items %}
+                        {% for error in error_list %}
+                        <li>{{ field }}: {{ error.message }}</li>
+                        {% endfor %}
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    <hr>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

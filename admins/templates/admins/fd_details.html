@@ -1,0 +1,99 @@
+<!-- fd_details.html -->
+{% extends 'admins/index.html' %}
+
+{% load static %}
+{% block database %}
+<section id="portfolio">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+            <h2>Fixed Deposit Details</h2>
+        </div>
+
+        
+        <!-- Add other details as needed -->
+
+
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <div class="form-group row text-left mb-0">
+                    <div class="col-sm-9">
+                        <h5 class="font-weight-bold">
+                            {{ customer.first_name }} {{ customer.last_name }}
+                        </h5>
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group row text-left mb-0 py-2">
+                    <div class="col-sm-4 py-1">
+                        <h6 class="font-weight-bold">
+                            {{ customer.first_name }}
+                            {{ customer.last_name }}
+
+                        </h6>
+                        <h6>
+                            Phone: {{ customer.contact_number }}
+                        </h6>
+                    </div>
+                    <div class="col-sm-4 py-1"></div>
+                    <div class="col-sm-4 py-1">
+                        {% comment %} <h6>
+                            Transaction no.
+                        </h6>
+                        <h6>Date :-
+                        </h6> {% endcomment %}
+
+                    </div>
+                </div>
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Deposit Amount</th>
+                            <th width="20%">Interest Rate:</th>
+                            <th width="20%">Deposit Term:</th>
+                            <th width="20%">Interest</th>
+                            <th width="20%">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td>{{ fd.deposit_amount }}</td>
+                            <td>{{ fd.interest_rate }}</td>
+                            <td>{{ fd.deposit_term }}</td>
+                            <td>{{ simple_interest }}</td>
+                            <td>{{ total_amount }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="form-group row text-left mb-0 py-2">
+                    <div class="col-sm-4 py-1"></div>
+                    <div class="col-sm-3 py-1"></div>
+                    <div class="col-sm-4 py-1"></div>
+                    <div class="col-sm-1 py-1">
+                        <form method="post">
+                        {% csrf_token %}
+                        
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form></div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+</section><!-- End Portfolio Section -->
+{% endblock %}

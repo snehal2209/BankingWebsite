@@ -1,0 +1,21 @@
+body, html {
+    height: 100%;
+  }
+
+  .wrapper {
+    display: flex;
+    height: 100%;
+  }
+
+  .sidebar {
+    width: 300px;
+    background-color: #333333;
+    color: #ffffff;
+  }
+
+  .content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #999999;
+    color: #ffffff;
+  }

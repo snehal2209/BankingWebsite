@@ -1,0 +1,33 @@
+{% extends 'admins/admin_home.html' %}
+
+{% block body %}
+  <h1>Account Details</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Customer ID</th>
+        <th>Username</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Contact Number</th>
+        <th>Address</th>
+        <th>Date of Birth</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for customer in status %}
+        <tr>
+          <td>{{ customer.customer_id }}</td>
+          <td>{{ customer.username }}</td>
+          <td>{{ customer.first_name }}</td>
+          <td>{{ customer.last_name }}</td>
+          <td>{{ customer.email }}</td>
+          <td>{{ customer.contact_number }}</td>
+          <td>{{ customer.address }}</td>
+          <td>{{ customer.date_of_birth }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

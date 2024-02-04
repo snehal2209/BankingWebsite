@@ -1,0 +1,103 @@
+<!-- fd_details.html -->
+{% extends 'admins/index.html' %}
+
+{% load static %}
+{% block database %}
+<section id="portfolio">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+            <h2>Fixed Deposit Details</h2>
+        </div>
+
+        <h1></h1>
+        <p>ID: {{ fd.pk }}</p>
+        <p>Deposit Amount: {{ fd.deposit_amount }}</p>
+        <p>Interest Rate: {{ fd.interest_rate }}</p>
+        <p>Deposit Term: {{ fd.deposit_term }}</p>
+        <!-- Add other details as needed -->
+
+
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <div class="form-group row text-left mb-0">
+                    <div class="col-sm-9">
+                        <h5 class="font-weight-bold">
+                            {{ customer.first_name }} {{ customer.last_name }}
+                        </h5>
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group row text-left mb-0 py-2">
+                    <div class="col-sm-4 py-1">
+                        <h6 class="font-weight-bold">
+                            {{ customer.first_name }}
+                            {{ customer.last_name }}
+
+                        </h6>
+                        <h6>
+                            Phone: {{ customer.contact_number }}
+                        </h6>
+                    </div>
+                    <div class="col-sm-4 py-1"></div>
+                    <div class="col-sm-4 py-1">
+                        <h6>
+                            Transaction no.
+                        </h6>
+                        <h6>Date :-
+                        </h6>
+
+                    </div>
+                </div>
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Spare parts</th>
+                            <th width="20%">Qty</th>
+                            <th width="20%">Price</th>
+                            <th width="20%">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a><button onclick="window.print()" class="btn btn-primary">Print</button></a>
+                <div class="form-group row text-left mb-0 py-2">
+                    <div class="col-sm-4 py-1"></div>
+                    <div class="col-sm-3 py-1"></div>
+                    <div class="col-sm-4 py-1">
+                        <h4>
+                            Total Amount: Rs.{{ total_amount }}
+                        </h4>
+                        <table width="100%">
+
+                        </table>
+                    </div>
+                    <div class="col-sm-1 py-1"></div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+</section><!-- End Portfolio Section -->
+{% endblock %}

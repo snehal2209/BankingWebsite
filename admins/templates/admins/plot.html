@@ -1,0 +1,25 @@
+{% extends 'admins/index.html' %}
+
+{% load static %}
+{% block database %}
+
+<main class="main bg-dark">
+<!-- ======= database Section ======= -->
+<section id="portfolio">
+    <div class="container" data-aos="fade-up" >
+
+      <div class="section-title">
+        <h2>DASHBOARD</h2>
+      </div>
+      <div class="card">
+        {% if chart %}
+        <img src="data:image/png;base64, {{chart | safe}}"
+      </div>
+    </div>
+</section>
+
+
+
+</main>
+
+{% endblock %}
